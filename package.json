@@ -1,0 +1,28 @@
+{
+  "name": "ticket-proof",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small harness for testing support-automation assumptions with an LLM: the model answers questions, your code owns the policy.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "practice": "tsx src/cli.ts practice",
+    "compare": "tsx src/cli.ts compare",
+    "report": "tsx src/cli.ts report",
+    "seal": "tsx src/cli.ts seal",
+    "grade": "tsx src/cli.ts grade",
+    "demo": "tsx src/cli.ts demo",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

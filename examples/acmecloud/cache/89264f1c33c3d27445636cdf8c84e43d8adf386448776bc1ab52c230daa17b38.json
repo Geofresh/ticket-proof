@@ -1,0 +1,92 @@
+{
+  "key": "89264f1c33c3d27445636cdf8c84e43d8adf386448776bc1ab52c230daa17b38",
+  "provider": "openrouter-decisions",
+  "model": "~typesafe/jev-latest",
+  "servedModel": "typesafe/jev-1.14-20261014",
+  "at": "2026-10-18T20:30:48.196Z",
+  "costUsd": 0.000101598,
+  "answers": {
+    "intent": {
+      "type": "choice",
+      "choice": "account_access",
+      "probabilities": {
+        "billing": 0,
+        "subscription": 0,
+        "account_access": 0.96,
+        "account_change": 0,
+        "security": 0,
+        "technical_issue": 0.04,
+        "how_to": 0,
+        "feature_request": 0,
+        "spam": 0,
+        "other": 0
+      }
+    },
+    "urgency": {
+      "type": "score",
+      "score": 1.81,
+      "probabilities": {
+        "0": 0.03,
+        "1": 0.43,
+        "2": 0.28,
+        "3": 0.23,
+        "4": 0.03
+      }
+    },
+    "frustration": {
+      "type": "score",
+      "score": 1.74,
+      "probabilities": {
+        "0": 0.01,
+        "1": 0.27,
+        "2": 0.7,
+        "3": 0.02,
+        "4": 0
+      }
+    },
+    "human_required": {
+      "type": "yesno",
+      "yes": 0.44
+    },
+    "engineering_candidate": {
+      "type": "yesno",
+      "yes": 0.92
+    },
+    "safe_to_automate": {
+      "type": "yesno",
+      "yes": 0.03
+    },
+    "security": {
+      "type": "yesno",
+      "yes": 0.02
+    },
+    "spam": {
+      "type": "yesno",
+      "yes": 0.01
+    },
+    "refund_requested": {
+      "type": "yesno",
+      "yes": 0.03
+    },
+    "duplicate_charge": {
+      "type": "yesno",
+      "yes": 0.02
+    },
+    "unrecognized_charges": {
+      "type": "yesno",
+      "yes": 0.02
+    },
+    "production_impact": {
+      "type": "yesno",
+      "yes": 0.09
+    },
+    "api_issue": {
+      "type": "yesno",
+      "yes": 0.05
+    },
+    "sufficient_detail": {
+      "type": "yesno",
+      "yes": 0.99
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "intent": {
+    "type": "choice",
+    "instructions": "Which single category best describes the customer's primary need in `message`? Use `customer` and `account` only as context. A higher plan does not change the category. If a compromise signal is present, choose security even if they also mention billing. If several needs are present, choose the one with the more serious operational or security impact. Asking how to invite someone, where a setting lives, where to download an existing invoice, or whether the current product or plan includes a capability, is how_to when nothing is failing and no money is in dispute. account_access is only for being unable to authenticate, with no sign the account was taken over. billing is a charge, refund, or payment dispute, not the location of a page. A request for money back is billing. An API, webhook, import, or outage failure is technical_issue. subscription is only cancel, renew, upgrade, or downgrade of the plan. Deleting data, transferring ownership, changing admins, merging workspaces, or turning SSO off is account_change. An unsolicited request for this company's customer data, admin password, or a wallet seed is spam, not security.",
+    "criteria": {
+      "billing": "Payment, invoice, refund, duplicate charge, or unrecognized charge. Not a plan cancellation.",
+      "subscription": "Cancel, renew, upgrade, or downgrade the plan itself. Not a data deletion, ownership transfer, member removal, or SSO change.",
+      "account_access": "Login, password, invite, or lockout with no sign the account was taken over.",
+      "account_change": "Delete data, transfer ownership, change admins or members, merge workspaces, or turn SSO off. Not a plan cancel, upgrade, or downgrade.",
+      "security": "Account compromise, unexpected login, credential theft, or takeover. Choose this over billing or access when any compromise signal is present. A request for compliance documents is not security.",
+      "technical_issue": "The product, API, import, dashboard, or checkout is failing or broken.",
+      "how_to": "How to use a feature that already exists.",
+      "feature_request": "Asking for something the product does not do yet.",
+      "spam": "Unsolicited sales pitches, SEO offers, scams, or a request for this company's customer data, admin password, or a wallet seed. A real person asking about a partnership, press, an event, or paperwork is other, not spam.",
+      "other": "None of the listed categories: partnership or reseller questions, press, event invitations, legal or compliance paperwork (DPA, SOC 2, security questionnaires, W-9), praise, or too little information to tell."
+    }
+  },
+  "urgency": {
+    "type": "score",
+    "instructions": "How operationally urgent is `message`? Score the event, not the emotion. Profanity, insults, and a business plan do not raise urgency. A calm message about a production outage is critical. A furious message about a cosmetic setting is routine. Several charges the customer does not recognize are urgent business impact (level 3), not a routine billing question. Production calls that are failing are at least level 3 even when a status page says operational. A stuck job or frozen queue that stops fulfillment is at least level 3.",
+    "criteria": [
+      "Routine. Nothing is failing and nothing is blocked: a question, a how-to, a feature idea, a routine billing admin request, or spam.",
+      "Minor. Something is wrong but small or contained: a cosmetic defect, a workaround exists, or a billing question that needs an answer.",
+      "Meaningful impact. A failure impairs real work for several users or a key feature, or a charge needs correcting, but production is not blocked.",
+      "Urgent business impact. Important work is blocked, production calls are failing, or several charges are unrecognized.",
+      "Critical. Production is blocked, checkout or core API is down, or the account may be compromised."
+    ]
+  },
+  "frustration": {
+    "type": "score",
+    "instructions": "How frustrated is the customer in `message`? Score tone only. An angry how-to question can be extremely frustrated and still not urgent.",
+    "criteria": [
+      "Calm or neutral.",
+      "Mild annoyance.",
+      "Frustrated.",
+      "Very frustrated.",
+      "Hostile, profane, or extreme. This is emotion only and does not change how severe the underlying event is."
+    ]
+  },
+  "human_required": {
+    "type": "yesno",
+    "instructions": "Does this situation currently require a human support agent before the next action? Answer yes for security, money movement, production impact, fraud concerns, or missing context that would make automation unsafe. Answer no for a routine how-to or feature request."
+  },
+  "engineering_candidate": {
+    "type": "yesno",
+    "instructions": "Does `message` report the product malfunctioning: an error, a failing API or webhook call, wrong or missing data, a page that will not load, or an outage? Answer yes when a defect is possible, even if the report is short, unconfirmed, or not yet reproduced. This flag marks a possible defect for a technical person to reproduce; it does not page engineering. A short report that production or the API is down is still a yes. Answer no for how-to questions, feature requests, billing disputes, account changes, and access requests where nothing is malfunctioning. Answer no when the customer's own network, proxy, browser policy, third-party tool, or configuration is the likely cause and the product is behaving as designed."
+  },
+  "safe_to_automate": {
+    "type": "yesno",
+    "instructions": "Can the next support action happen with no human review? The automated action is only to send an existing help article or to log a feature idea. Answer yes when `message` is a plain how-to, a question about what the product or a plan includes, or a feature request, and nothing is failing, no money is in dispute, no account change is asked for, and there is no security signal, however rude the tone. Answer no for anything that needs a person to look at the account: refunds, charges, cancellations, deletions, ownership or member changes, lockouts, errors, outages, or a possible compromise."
+  },
+  "security": {
+    "type": "yesno",
+    "instructions": "Is there a credible account-compromise, takeover, or credential-theft signal in `message` or `account`? An ordinary refund threat or billing complaint is not a security incident. An admin nobody recognizes, a recovery email the customer does not own, a former employee logging in after removal, a password reset or verification code they did not request, or an API key changed without permission is security even when the account flags are clear. So is any action on the account that nobody on the customer's team took: an export, a deletion, a settings or SSO change, an invoice or email sent from the account, an app or integration authorized; and sessions, devices or apps the customer does not recognize. A message that asks this company for its customer database, admin password, or a wallet seed is not security."
+  },
+  "spam": {
+    "type": "yesno",
+    "instructions": "Is `message` spam: an unsolicited sales pitch, an SEO offer, a scam, or a request for this company's customer data, admin password, or a wallet seed? A real person asking about a partnership, press, an event, or paperwork is not spam, even though it is not a support problem."
+  },
+  "refund_requested": {
+    "type": "yesno",
+    "instructions": "Is the customer asking for money back?"
+  },
+  "duplicate_charge": {
+    "type": "yesno",
+    "instructions": "Is the customer reporting the same subscription or invoice was charged more than once? Unrecognized charges that are not described as a duplicate renewal are not a duplicate charge. A single charge that does not match the invoice amount is not a duplicate."
+  },
+  "unrecognized_charges": {
+    "type": "yesno",
+    "instructions": "Is the customer reporting one or more charges they do not recognize, as opposed to a known subscription renewing twice?"
+  },
+  "production_impact": {
+    "type": "yesno",
+    "instructions": "Is production, live checkout, or a customer-facing workflow currently blocked? Production impact means the customer's live business is blocked: their production traffic, live checkout, their own customers, or a whole team's daily operation. One person who cannot sign in while others can, a failure with a working alternative, or an API error the customer does not say is hurting live traffic is not production impact. A staging-only failure is not production impact. A status page that says operational does not override the customer saying production calls are failing. A stuck job or frozen queue that stops fulfillment is production impact."
+  },
+  "api_issue": {
+    "type": "yesno",
+    "instructions": "Is the customer reporting an API, webhook, or integration failure?"
+  },
+  "sufficient_detail": {
+    "type": "yesno",
+    "instructions": "Does `message` name a concrete symptom a support agent could investigate, such as a product surface, an error, or a specific account action? Greetings, insults, and statements that something is wrong without saying what do not count. Length is not detail. A generic report that something is broken, however long, is not sufficient when it names no specific behavior. A named behavior, such as a page freezing, exports failing on a schedule, or users being logged out, is sufficient. The customer saying they do not have a request id does not erase a symptom they already named."
+  }
+}
